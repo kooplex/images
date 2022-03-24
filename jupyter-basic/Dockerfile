@@ -22,6 +22,8 @@ RUN chmod a+x /usr/local/bin/runjupyter.sh /opt/conda/bin/jupyter-notebook-koopl
 ADD etc/kooplex-logo.png /opt/conda/lib/python3.8/site-packages/notebook/static/base/images/kooplex-logo.png
 ADD etc/kooplex-logo.png /opt/conda/lib/python3.8/site-packages/notebook/static/base/images/jupyterlab.png
 
+ADD etc/entrypoint.sh /entrypoint.sh
+RUN chmod a+x /entrypoint.sh
 ########## add the rest
 #ADD init /init/
 #RUN chmod a+x /init/91-startsshagent.sh
