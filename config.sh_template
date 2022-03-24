@@ -1,0 +1,11 @@
+BUILD_DIR=/srv/build/images
+
+# REGISTRY
+MY_REGISTRY=image-registry
+
+# Namespace where to install image
+NS=k8plex
+
+POD_NAME=hub-0
+
+
