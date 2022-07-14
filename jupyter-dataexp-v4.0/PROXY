@@ -1,0 +1,3 @@
+jupyter,True,True,notebook/{container.label},notebook/{container.label}/,8000
+testurl,False,False,notebook/test/{container.label},notebook/test/{container.label}/,9000
+

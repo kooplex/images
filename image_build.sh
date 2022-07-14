@@ -8,8 +8,8 @@ IMAGE_DIR=`basename $2`
 NS=$3
 POD_NAME=$4
 API_CALL="python3 /kooplexhub/kooplexhub/manage.py manage_images"
-
-IMAGE_NAME="${IMAGE_DIR}-${TAG}"
+IMAGE_NAME="${IMAGE_DIR}"
+IMAGE_TYPE=`cat ${IMAGE_DIR}/imagetype`
 RIMAGE_NAME="${MY_REGISTRY}/${IMAGE_NAME}"
 BUILDMOD_DIR=${BUILD_DIR}/${IMAGE_DIR}
 echo $IMAGE_NAME, $RIMAGE_NAME, $BUILDMOD_DIR
@@ -28,7 +28,7 @@ case $1 in
 
   "install")
       echo "Register in hub ${RIMAGE_NAME}" >&2
-      kubectl exec -it -n ${NS} ${POD_NAME} -- ${API_CALL} --add ${RIMAGE_NAME}
+      kubectl exec -it -n ${NS} ${POD_NAME} -- ${API_CALL} --add ${RIMAGE_NAME} ${IMAGE_TYPE}
       for items in `cat ${BUILDMOD_DIR}/ENVVAR`
       do
 	      arr=(`echo $items| awk -F'=' '{print $1,$2}'`)

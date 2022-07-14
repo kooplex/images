@@ -102,13 +102,16 @@ RUN R -e "BiocManager::install(c('phyloseq'))"
 
 RUN R -e "install.packages('tidyverse')"
 
+RUN $CONDA_DIR/bin/pip install    pyvcf multiqc pymonetdb
+#RUN $CONDA_DIR/bin/pip install --ignore-installed  kubernetes
+RUN $CONDA_DIR/bin/pip install kubernetes
 
 ########## add the rest
 #ADD init /init_scripts
 #RUN chmod a+x /init_scripts/91-startsshagent.sh
 # Install LDAP and setup authentication
 
-RUN mkdir /etc/mnt
+#RUN mkdir /etc/mnt
 #RUN sed -i -e "s,passwd.*,passwd: ldap compat systemd," -e "s,group.*,group: ldap compat systemd," /etc/nsswitch.conf
 
 RUN ln -s /usr/lib/x86_64-linux-gnu/libldap.a /usr/lib/

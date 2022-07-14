@@ -1,0 +1,6 @@
+NB_USER={container.user.username}
+NB_TOKEN={container.user.profile.token}
+NB_PORT=8000
+NB_URL={container.proxy_route}
+NB_TESTURL=notebook/test/{container.label}
+
