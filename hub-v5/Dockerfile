@@ -1,4 +1,4 @@
-FROM base_ubuntu20-v4.0
+FROM base_ubuntu20-v5
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -21,8 +21,10 @@ RUN pip3 install mysqlclient netaddr ldap3 pwgen unidecode pandas kubernetes par
 
 #RUN pip3 install  debugpy==1.5.1 #git+https://github.com/arount/pytea
 
-#ADD etc/entrypoint.sh /entrypoint.sh
-#RUN chmod a+x /entrypoint.sh
-
 EXPOSE 80
+
+ADD etc/entrypoint.sh /entrypoint.sh
+RUN chmod a+x /entrypoint.sh
+ENTRYPOINT ["tini", "--"]
+CMD ["/bin/bash", "/entrypoint.sh"]
 

@@ -28,7 +28,8 @@ case $1 in
 
   "install")
       echo "Register in hub ${RIMAGE_NAME}" >&2
-      kubectl exec -it -n ${NS} ${POD_NAME} -- ${API_CALL} --add ${RIMAGE_NAME} ${IMAGE_TYPE}
+      echo kubectl exec -it -n ${NS} ${POD_NAME} -- ${API_CALL} --add_image ${RIMAGE_NAME} #${IMAGE_TYPE}
+      kubectl exec -it -n ${NS} ${POD_NAME} -- ${API_CALL} --add_image ${RIMAGE_NAME} #${IMAGE_TYPE}
       for items in `cat ${BUILDMOD_DIR}/ENVVAR`
       do
 	      arr=(`echo $items| awk -F'=' '{print $1,$2}'`)

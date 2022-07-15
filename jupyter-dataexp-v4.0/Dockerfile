@@ -1,4 +1,4 @@
-FROM base-extras_ubuntu-v5
+FROM base-conda_ubuntu20-v4.0
 
 RUN apt-get update && \
     apt-get install -yq --no-install-recommends \
