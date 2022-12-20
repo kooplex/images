@@ -1,5 +1,6 @@
 #!/bin/sh
 
+
 for SCRIPT in /.init_scripts/*
 do
     if [ -x $SCRIPT ] ; then
@@ -18,4 +19,4 @@ nice -n 19 /usr/local/bin/runjupyter.sh --config=/etc/jupyter_notebook_config.py
 
 
 #echo "Sleeping for infinity"
-exec sleep infinity
+#exec sleep infinity

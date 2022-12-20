@@ -5,6 +5,3 @@ NB_URL={container.proxy_route}
 NB_TESTURL=notebook/test/{container.label}
 NB_TESTPORT=9000
 
-REPORT_URL=notebook/test/{container.label}
-REPORT_PORT=9000
-REPORT_USER={container.user.username}

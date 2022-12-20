@@ -1,0 +1,3 @@
+      sed -e "s/##FQDN##/${FQDN}/"\
+            -e "s/##REWRITEPROTO##/${REWRITEPROTO}/" etc/rstudio-login.html-template > rstudio-login.html
+

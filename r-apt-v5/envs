@@ -1,0 +1,3 @@
+TAG=v5
+FQDN=k8plex-edu.elte.hu
+REWRITEPROTO=https
