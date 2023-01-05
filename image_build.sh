@@ -1,17 +1,23 @@
 #!/bin/bash
 
-. config.sh
+BUILD_DIR=/srv/build/images
+
+# REGISTRY
+MY_REGISTRY=image-registry.vo.elte.hu
 
 IMAGE_DIR=`basename $2`
 . ${IMAGE_DIR}/envs
 
 NS=$3
-POD_NAME=$4
+POD_NAME=$4" -c hub"
 API_CALL="python3 /kooplexhub/kooplexhub/manage.py manage_images"
 IMAGE_NAME="${IMAGE_DIR}"
+DESCRIPTION=${IMAGE_DIR}/Dockerfile
 IMAGE_TYPE=`cat ${IMAGE_DIR}/imagetype`
 RIMAGE_NAME="${MY_REGISTRY}/${IMAGE_NAME}"
 BUILDMOD_DIR=${BUILD_DIR}/${IMAGE_DIR}
+DESCRIPTION=`cat ${IMAGE_DIR}/DESCRIPTION` 
+DOCKERFILE=`cat ${IMAGE_DIR}/Dockerfile`
 echo $IMAGE_NAME, $RIMAGE_NAME, $BUILDMOD_DIR
 mkdir -p $BUILDMOD_DIR
 
@@ -28,20 +34,23 @@ case $1 in
 
   "install")
       echo "Register in hub ${RIMAGE_NAME}" >&2
-      echo kubectl exec -it -n ${NS} ${POD_NAME} -- ${API_CALL} --add_image ${RIMAGE_NAME} #${IMAGE_TYPE}
-      kubectl exec -it -n ${NS} ${POD_NAME} -- ${API_CALL} --add_image ${RIMAGE_NAME} #${IMAGE_TYPE}
+      echo "Install image"
+      echo kubectl exec -it -n ${NS} ${POD_NAME} -- ${API_CALL} --add_image ${RIMAGE_NAME} "${IMAGE_TYPE}"
+      kubectl exec -it -n ${NS} ${POD_NAME} -- ${API_CALL} --add_image ${RIMAGE_NAME} "${IMAGE_TYPE}"
+      echo "Install image w descr and dockfile"
+      kubectl exec -it -n ${NS} ${POD_NAME} -- ${API_CALL} --add_imagedescription ${RIMAGE_NAME} "${DESCRIPTION}" "${DOCKERFILE}"
       for items in `cat ${BUILDMOD_DIR}/ENVVAR`
       do
-	      arr=(`echo $items| awk -F'=' '{print $1,$2}'`)
+              arr=(`echo $items| awk -F'=' '{print $1,$2}'`)
          kubectl exec -it -n ${NS} ${POD_NAME} -- ${API_CALL}  --add_envvar ${RIMAGE_NAME} ${arr[@]}
       done
 
       for items in `cat ${BUILDMOD_DIR}/PROXY`
       do
-	      arr=(`echo $items| awk -v IMN=${RIMAGE_NAME} -F',' '{print $1,IMN,$2,$3,$4,$5,$6}'`)
-	      echo ${arr[@]}
+              arr=(`echo $items| awk -v IMN=${RIMAGE_NAME} -F',' '{print $1,IMN,$2,$3,$4,$5,$6}'`)
+              echo ${arr[@]}
           kubectl exec -it -n ${NS} ${POD_NAME} -- ${API_CALL} --add_proxy    ${arr[@]}
-	     
+             
       done
 #      kubectl exec -it -n ${NS} ${POD_NAME} -- python3 /kooplexhub/kooplexhub/manage.py manage_images --add_envvar ${RIMAGE_NAME} NB_USER {container.user.username}
 #      kubectl exec -it -n ${NS} ${POD_NAME} -- python3 /kooplexhub/kooplexhub/manage.py manage_images --add_envvar ${RIMAGE_NAME} NB_TOKEN {container.user.profile.token}
