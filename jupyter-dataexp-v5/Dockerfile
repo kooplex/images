@@ -29,13 +29,26 @@ RUN $CONDA_DIR/bin/pip install pytess oauth2 k3d jupyterlab_sql \
       #ipyleaflet==0.13.2 tensorflow==2.3.0  \
       ipyleaflet tensorflow \
       nbindex-jupyter jupyter-datatables jupyter_require \
-      pip install shapely folium geopandas seaborn pyproj geovoronoi descartes \
+      shapely folium geopandas seaborn pyproj geovoronoi descartes \
       jupyter-kernel-gateway dash jupyter-dash missingno pyarrow datatable  dash_cytoscape dash_html_components cufflinks \
       opencv-python wordcloud\
       holoviews datashader networkx 
       #pycairo>=1.20.0 networkx>=2.7.0 
 
+# SLURM 
+RUN apt update && apt install -y slurm-client  &&\
+ apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN pip install jupyterlab_slurm 
 
+# GO Teleport
+RUN curl https://apt.releases.teleport.dev/gpg -o /usr/share/keyrings/teleport-archive-keyring.asc && \
+    . /etc/os-release && \
+    echo "deb [signed-by=/usr/share/keyrings/teleport-archive-keyring.asc] \
+  https://apt.releases.teleport.dev/${ID?} ${VERSION_CODENAME?} stable/v10" \
+| tee /etc/apt/sources.list.d/teleport.list && apt-get update && apt-get install -y teleport && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN $CONDA_DIR/bin/pip install dash_bootstrap_components gunicorn
 
 # 2022 04 20 requests by Borkovits
 #RUN $CONDA_DIR/bin/conda install --quiet --yes  -c conda-forge pycairo cairocffi
@@ -71,6 +84,9 @@ ADD etc/entrypoint.sh /entrypoint.sh
  #//91-startsshagent.sh
 
 RUN chmod a+x /usr/local/bin/runjupyter.sh /opt/conda/bin/jupyter-notebook-kooplex /entrypoint.sh
+
+# FROM TOOLS/kubernetesjobtools
+ADD etc/41-kubejobsaliases.sh /etc/profile.d/41-kubejobsaliases.sh
 WORKDIR /
 
 

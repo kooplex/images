@@ -1,5 +1,5 @@
 REPORT_FILE=main.py
 REPORT_FOLDER=/srv/report
-REPORT_PORT=8000
+REPORT_PORT=9000
 REPORT_URL=/dreport/{container.label}
 REPORT_USER={container.user.username}

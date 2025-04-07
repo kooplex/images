@@ -8,6 +8,16 @@ RUN $CONDA_DIR/bin/conda install -y --override-channels -c conda-forge  plotly
 RUN $CONDA_DIR/bin/pip install schemdraw 
 RUN $CONDA_DIR/bin/pip install ahkab  
 
+# GO Teleport
+RUN curl https://apt.releases.teleport.dev/gpg -o /usr/share/keyrings/teleport-archive-keyring.asc && \
+    . /etc/os-release && \
+    echo "deb [signed-by=/usr/share/keyrings/teleport-archive-keyring.asc] \
+  https://apt.releases.teleport.dev/${ID?} ${VERSION_CODENAME?} stable/v10" \
+| tee /etc/apt/sources.list.d/teleport.list && apt-get update && apt-get install -y teleport && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN $CONDA_DIR/bin/pip install dash_bootstrap_components gunicorn
+
 # basic
 ADD etc/jupyter-notebook-kooplex /opt/conda/bin/jupyter-notebook-kooplex 
 

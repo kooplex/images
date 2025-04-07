@@ -1,0 +1,10 @@
+#! /bin/bash
+
+# We cannot mount this config file into /etc because it is not empty
+if [ -f /etc/mnt/nslcd.conf ] ; then
+  cat /etc/mnt/nslcd.conf > /etc/nslcd.conf
+  chmod 0600 /etc/nslcd.conf
+fi
+
+service nslcd start
+
