@@ -1,0 +1,1 @@
+/entrypoint.sh && nice -n 19 /usr/local/bin/runjupyter.sh --config=/etc/jupyter_notebook_config.py --NotebookApp.base_url=\$NB_URL --NotebookApp.port=\$NB_PORT --NotebookApp.token=\$NB_TOKEN
