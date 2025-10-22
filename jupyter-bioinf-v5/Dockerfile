@@ -48,7 +48,7 @@ RUN wget http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/Trimmoma
     unzip Trimmomatic-0.39.zip
 
 # SAMTOOLS
-ENV SAMVER 1.12
+ENV SAMVER 1.16
 ENV SAMTOOLS samtools-${SAMVER}
 ENV BCFTOOLS bcftools-${SAMVER}
 ENV HTSLIB htslib-${SAMVER}
@@ -72,8 +72,9 @@ RUN mkdir /opt/seqmonk && cd /opt/seqmonk && wget https://www.bioinformatics.bab
 
 WORKDIR /opt
 RUN wget https://github.com/FelixKrueger/TrimGalore/archive/refs/tags/0.6.6.tar.gz && tar -xf 0.6.6.tar.gz && ln  TrimGalore-0.6.6/trim_galore /opt/conda/bin/trim_galore
-RUN wget https://jztkft.dl.sourceforge.net/project/bowtie-bio/bowtie2/2.4.5/bowtie2-2.4.5-linux-x86_64.zip && unzip bowtie2-2.4.5-linux-x86_64.zip
-ENV PATH ${PATH}:/opt/bowtie2-2.4.5-linux-x86_64
+RUN  $CONDA_DIR/bin/conda install -y -c bioconda bowtie
+#RUN wget https://jztkft.dl.sourceforge.net/project/bowtie-bio/bowtie2/2.4.5/bowtie2-2.4.5-linux-x86_64.zip && unzip bowtie2-2.4.5-linux-x86_64.zip
+#ENV PATH ${PATH}:/opt/bowtie2-2.4.5-linux-x86_64
 
 
 #kraken2 kraken2: https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown
@@ -135,10 +136,10 @@ RUN  cp -r /root/ncbi-outdir/*/linux/gcc/x86_64/rel/bin/* /usr/local/sbin/
 
 WORKDIR /opt
 RUN wget https://github.com/CSB5/lofreq/raw/master/dist/lofreq_star-2.1.5_linux-x86-64.tgz && tar -xf lofreq_star-2.1.5_linux-x86-64.tgz
-#RUN pip uninstall -y samtools
 
-WORKDIR /opt/nextflow
-RUN curl -s https://get.nextflow.io | bash && chmod +rx nextflow 
+## vmiert nem sikerul
+# WORKDIR /opt/nextflow
+# RUN curl -s https://get.nextflow.io | bash && chmod +rx nextflow 
 #TEST RUN ./nextflow
 
 WORKDIR /opt
@@ -147,7 +148,7 @@ RUN wget "https://github.com/iqtree/iqtree2/releases/download/v2.2.0/iqtree-2.2.
 
 
 # Remove unwanted, non working samtools from conda
-RUN rm /opt/conda/bin/samtools && ln /opt/samtools/samtools-1.12/samtools /opt/conda/bin/samtools
+RUN rm /opt/conda/bin/samtools && ln /opt/samtools/samtools-1.16/samtools /opt/conda/bin/samtools
 
 RUN wget https://mafft.cbrc.jp/alignment/software/mafft-7.490-linux.tgz && tar xf mafft-7.490-linux.tgz && chmod a+rx -R /opt/mafft-linux64/
 RUN ln -s /opt/mafft-linux64/mafftdir/libexec /usr/libexec/mafft
@@ -163,8 +164,7 @@ RUN $CONDA_DIR/bin/pip install \
       opencv-python wordcloud\
       holoviews datashader networkx 
 
-RUN $CONDA_DIR/bin/pip install jupyterlab_sql ipython-sql pgspecial && \
-    jupyter serverextension enable jupyterlab_sql --py --sys-prefix && \
+RUN $CONDA_DIR/bin/pip install ipython-sql pgspecial && \
     jupyter lab build 
 
 RUN $CONDA_DIR/bin/pip install jupyterlab-dash && ls && jupyter labextension install jupyterlab-dash && \
@@ -193,9 +193,9 @@ RUN $CONDA_DIR/bin/pip install dash_bootstrap_components gunicorn
 RUN curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-410.0.0-linux-x86_64.tar.gz && \
     tar xf google-cloud-cli-410.0.0-linux-x86_64.tar.gz &&  rm /opt/google-cloud-cli-410.0.0-linux-x86_64.tar.gz 
 
-RUN $CONDA_DIR/bin/pip install pymc3 numpy==1.21.6
+RUN $CONDA_DIR/bin/pip install pymc3 numpy==1.21.6 jinja2==3.0.3 nbconvert==6.4.4
 
-RUN apt-get update && apt-get install -y libboost-all-dev &&\
+RUN apt-get update && apt-get install -y libboost-all-dev libcurl4-openssl-dev &&\
  apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN wget https://bitbucket.org/berkeleylab/metabat/get/master.tar.gz && \
@@ -208,6 +208,14 @@ RUN wget https://bitbucket.org/berkeleylab/metabat/get/master.tar.gz && \
     cd .. && \
     rm -rf build
 
+RUN cd /opt/samtools/${SAMTOOLS} && make clean && ./configure --enable-libcurl && make && make install
+# Remove unwanted, non working samtools from conda
+RUN rm /opt/conda/bin/samtools && ln /opt/samtools/samtools-1.16/samtools /opt/conda/bin/samtools
+
+RUN $CONDA_DIR/bin/conda install -c bioconda entrez-direct
+
+RUN wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.3.296/quarto-1.3.296-linux-amd64.deb &&\
+    dpkg -i  quarto-1.3.296-linux-amd64.deb && rm quarto-1.3.296-linux-amd64.deb
 # basic
 ADD etc/jupyter-notebook-kooplex /opt/conda/bin/jupyter-notebook-kooplex 
 

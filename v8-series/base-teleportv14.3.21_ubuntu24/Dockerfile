@@ -1,5 +1,7 @@
 FROM ubuntu:24.10
 
+RUN sed -i -e 's/archive.u/old-releases.u/' /etc/apt/sources.list.d/ubuntu.sources
+RUN sed -i -e 's/security.u/old-releases.u/' /etc/apt/sources.list.d/ubuntu.sources
 RUN apt update && apt install -y  --no-install-recommends\
     gdebi wget &&\
  apt-get clean && rm -rf /var/lib/apt/lists/*

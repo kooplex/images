@@ -12,6 +12,8 @@ RUN cd /opt/CityFlow && \
 
 RUN $CONDA_DIR/bin/conda install --quiet --yes  -c conda-forge tensorflow
 
+RUN $CONDA_DIR/bin/pip install dash_bootstrap_components gunicorn
+
 # Jupyter specific settings and templates
 ADD etc/jupyter-notebook-kooplex /opt/conda/bin/jupyter-notebook-kooplex 
 ADD etc/jupyter_notebook_config.py /etc/jupyter_notebook_config.py

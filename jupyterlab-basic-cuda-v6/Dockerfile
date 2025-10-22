@@ -26,10 +26,19 @@ ENV NV_LIBNCCL_PACKAGE_NAME=libnccl2
 ENV NV_LIBNCCL_PACKAGE_VERSION=2.12.12-1
 ENV NCCL_VERSION=2.12.12-1
 ENV NV_LIBNCCL_PACKAGE=libnccl2=2.12.12-1+cuda11.7
-#RUN bash -c "dpkg -l | grep nvidia"
-RUN apt-get update && apt-get install -y --no-install-recommends nvidia-driver-515     cuda-libraries-11-7=${NV_CUDA_LIB_VERSION}     ${NV_LIBNPP_PACKAGE}     cuda-nvtx-11-7=${NV_NVTX_VERSION}     libcusparse-11-7=${NV_LIBCUSPARSE_VERSION}     ${NV_LIBCUBLAS_PACKAGE}     ${NV_LIBNCCL_PACKAGE}     && rm -rf /var/lib/apt/lists/* # buildkit
+
+ENV NV_DRIVER_VER=515.86.01-0ubuntu1
+RUN apt-get update && apt-get install -y --no-install-recommends nvidia-driver-515=${NV_DRIVER_VER} libnvidia-compute-515=${NV_DRIVER_VER} libnvidia-fbc1-515=${NV_DRIVER_VER} libnvidia-cfg1-515=${NV_DRIVER_VER} libnvidia-gl-515=${NV_DRIVER_VER} \
+ nvidia-dkms-515=${NV_DRIVER_VER}  libnvidia-extra-515=${NV_DRIVER_VER} nvidia-kernel-source-515=${NV_DRIVER_VER}\
+  libnvidia-compute-515=${NV_DRIVER_VER} libnvidia-decode-515=${NV_DRIVER_VER} libnvidia-encode-515=${NV_DRIVER_VER} \
+ nvidia-compute-utils-515=${NV_DRIVER_VER} nvidia-utils-515=${NV_DRIVER_VER} xserver-xorg-video-nvidia-515=${NV_DRIVER_VER}\
+ libnvidia-common-515=${NV_DRIVER_VER}  nvidia-kernel-common-515=${NV_DRIVER_VER} \
+    cuda-libraries-11-7=${NV_CUDA_LIB_VERSION}     ${NV_LIBNPP_PACKAGE}     cuda-nvtx-11-7=${NV_NVTX_VERSION}     libcusparse-11-7=${NV_LIBCUSPARSE_VERSION}     ${NV_LIBCUBLAS_PACKAGE}     ${NV_LIBNCCL_PACKAGE}     && rm -rf /var/lib/apt/lists/* # buildkit
 
 # SLURM 
 RUN pip install jupyterlab_slurm pandas
 
 RUN  $CONDA_DIR/bin/conda install -c conda-forge  jupyterlab-git
+RUN $CONDA_DIR/bin/conda install -y -c conda-forge nb_conda_kernels
+
+WORKDIR /

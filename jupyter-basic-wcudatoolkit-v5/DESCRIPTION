@@ -1,1 +1,3 @@
-basic image with cuda toolkit for using GPUs
+Supports: Jupyter and Python
+Hardware: CPU and GPU
+Software: nvidia toolkit

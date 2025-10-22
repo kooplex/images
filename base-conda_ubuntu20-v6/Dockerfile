@@ -16,7 +16,7 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 
 # Jupyter enhancement
-RUN  $CONDA_DIR/bin/conda install -c conda-forge  jupyter-lsp-python jupyterlab jupyterlab-lsp
+RUN  $CONDA_DIR/bin/conda install -c conda-forge jupyterlab 
 RUN  $CONDA_DIR/bin/pip install 'python-lsp-server[all]'
 
 # For databases

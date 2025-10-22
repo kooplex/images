@@ -26,8 +26,10 @@ ENV NV_LIBNCCL_PACKAGE_NAME=libnccl2
 ENV NV_LIBNCCL_PACKAGE_VERSION=2.12.12-1
 ENV NCCL_VERSION=2.12.12-1
 ENV NV_LIBNCCL_PACKAGE=libnccl2=2.12.12-1+cuda11.7
-#RUN bash -c "dpkg -l | grep nvidia"
-RUN apt-get update && apt-get install -y --no-install-recommends nvidia-driver-515     cuda-libraries-11-7=${NV_CUDA_LIB_VERSION}     ${NV_LIBNPP_PACKAGE}     cuda-nvtx-11-7=${NV_NVTX_VERSION}     libcusparse-11-7=${NV_LIBCUSPARSE_VERSION}     ${NV_LIBCUBLAS_PACKAGE}     ${NV_LIBNCCL_PACKAGE}     && rm -rf /var/lib/apt/lists/* # buildkit
+
+# !!! SHOULD BE COMPATIBLE WITH THE HOST DRIVERS
+RUN apt-get update && apt-get install -y --no-install-recommends     libzmq5 libnvidia-compute-470    && rm -rf /var/lib/apt/lists/* # buildkit
+#RUN apt-get update && apt-get install -y --no-install-recommends nvidia-driver-515     cuda-libraries-11-7=${NV_CUDA_LIB_VERSION}     ${NV_LIBNPP_PACKAGE}     cuda-nvtx-11-7=${NV_NVTX_VERSION}     libcusparse-11-7=${NV_LIBCUSPARSE_VERSION}     ${NV_LIBCUBLAS_PACKAGE}     ${NV_LIBNCCL_PACKAGE}     && rm -rf /var/lib/apt/lists/* # buildkit
 #RUN TARGETARCH=arm64 /bin/sh -c apt-mark hold ${NV_LIBCUBLAS_PACKAGE_NAME} ${NV_LIBNCCL_PACKAGE_NAME} # buildkit
 
 #ENV NVIDIA_REQUIRE_CUDA=cuda #>=11.7

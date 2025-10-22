@@ -71,8 +71,20 @@ ENV PATH $CONDA_DIR/bin:$PATH
 #    git-lfs && \
 #    rm -rf /var/lib/apt/lists/*
 
+# SLURM 
+RUN apt update && apt install -y slurm-client  &&\
+ apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN pip install jupyterlab_slurm 
 
+# GO Teleport
+RUN curl https://apt.releases.teleport.dev/gpg -o /usr/share/keyrings/teleport-archive-keyring.asc && \
+    . /etc/os-release && \
+    echo "deb [signed-by=/usr/share/keyrings/teleport-archive-keyring.asc] \
+  https://apt.releases.teleport.dev/${ID?} ${VERSION_CODENAME?} stable/v10" \
+| tee /etc/apt/sources.list.d/teleport.list && apt-get update && apt-get install -y teleport && \
+    rm -rf /var/lib/apt/lists/*
 
+RUN $CONDA_DIR/bin/pip install dash_bootstrap_components gunicorn
 # basic
 ADD etc/jupyter-notebook-kooplex /opt/conda/bin/jupyter-notebook-kooplex 
 
@@ -89,6 +101,7 @@ ADD etc/jupyter_report_config.py /etc/jupyter_report_config.py
 ADD etc/start-notebook.sh /usr/local/bin/runjupyter.sh
 ADD etc/entrypoint.sh /entrypoint.sh
 RUN chmod a+x /usr/local/bin/runjupyter.sh /opt/conda/bin/jupyter-notebook-kooplex /entrypoint.sh
+ADD etc/41-kubejobsaliases.sh /etc/profile.d/41-kubejobsaliases.sh
 WORKDIR /
 
 

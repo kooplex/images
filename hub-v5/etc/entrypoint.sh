@@ -34,5 +34,6 @@ while (true) ; do
   sleep 2
 done
 
-/usr/bin/python3 manage.py runserver 0.0.0.0:80
+/usr/bin/python3 manage.py runserver 0.0.0.0:8080
 
+sleep infinity

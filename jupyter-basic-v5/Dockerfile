@@ -1,9 +1,21 @@
-FROM base-kube_ubuntu20-v5
+FROM base-extras_ubuntu20-v5
 
 # SLURM 
-#RUN apt update && apt install -y slurm-client  &&\
-# apt-get clean && rm -rf /var/lib/apt/lists/*
-#RUN pip install jupyterlab_slurm 
+RUN apt update && apt install -y slurm-client  &&\
+ apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN pip install jupyterlab_slurm pandas
+
+# GO Teleport
+RUN curl https://apt.releases.teleport.dev/gpg -o /usr/share/keyrings/teleport-archive-keyring.asc && \
+    . /etc/os-release && \
+    echo "deb [signed-by=/usr/share/keyrings/teleport-archive-keyring.asc] \
+  https://apt.releases.teleport.dev/${ID?} ${VERSION_CODENAME?} stable/v10" \
+| tee /etc/apt/sources.list.d/teleport.list && apt-get update && apt-get install -y teleport && \
+    rm -rf /var/lib/apt/lists/*
+RUN $CONDA_DIR/bin/pip install dash_bootstrap_components gunicorn
+
+RUN apt update && apt install -y netcat-openbsd at  &&\
+ apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Jupyter specific settings and templates
 ADD etc/jupyter-notebook-kooplex /opt/conda/bin/jupyter-notebook-kooplex 
@@ -21,8 +33,10 @@ RUN chmod a+x /usr/local/bin/runjupyter.sh /opt/conda/bin/jupyter-notebook-koopl
 #RUN chmod a+x /init/91-startsshagent.sh
 #RUN mkdir /etc/mnt
 RUN sed -i -e "s,passwd.*,passwd: ldap compat systemd," -e "s,group.*,group: ldap compat systemd," /etc/nsswitch.conf
-#RUN mkdir /init
-#ADD etc/01-nslcd /init/01-nslcd
+
+#RUN mkdir /initscripts
+#ADD init/41-kubejobsaliases.sh initscript/41-kubejobsaliases.sh
+ADD etc/41-kubejobsaliases.sh /etc/profile.d/41-kubejobsaliases.sh
 #RUN chmod +x /init/01-nslcd
 
 RUN chmod a+x /usr/local/bin/runjupyter.sh /opt/conda/bin/jupyter-notebook-kooplex /entrypoint.sh 

@@ -18,6 +18,8 @@ RUN curl https://apt.releases.teleport.dev/gpg -o /usr/share/keyrings/teleport-a
 
 RUN $CONDA_DIR/bin/pip install dash_bootstrap_components gunicorn
 
+RUN $CONDA_DIR/bin/pip install matplotlib==3.7.1
+
 # basic
 ADD etc/jupyter-notebook-kooplex /opt/conda/bin/jupyter-notebook-kooplex 
 

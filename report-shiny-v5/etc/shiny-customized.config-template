@@ -3,9 +3,9 @@ run_as shiny;
 
 # Define a server that listens on port 3838
 server {
-  listen 3838;
+  listen 9000;
 
-  location /##BASEURL##/ {
+  location /##BASEURL## {
 
     # Host the directory of Shiny Apps stored in this directory
     site_dir /srv/report;

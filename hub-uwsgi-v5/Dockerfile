@@ -68,7 +68,7 @@ RUN pip3 install mysqlclient netaddr ldap3 pwgen unidecode pandas kubernetes par
    django-threadlocals django=="$DJANGO_VERSION" \
    django-tables2 django-bootstrap-v5 django_pandas django-bootstrap5 \
    "python-social-auth[django]" "social-auth-core[openidconnect]" social-auth-app-django social-auth-core \
-   django-celery-beat redis python-jose==3.3.0
+   django-celery-beat redis python-jose==3.3.0 django-taggit channels["daphne"]
 
 #RUN pip3 install  debugpy==1.5.1 #git+https://github.com/arount/pytea
 RUN ln -s /usr/local/bin/pip3.8 /usr/bin/pip3.8

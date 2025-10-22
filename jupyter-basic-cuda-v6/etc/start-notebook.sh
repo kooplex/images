@@ -2,6 +2,8 @@
 
 # debug
 # env
+source /opt/conda/etc/profile.d/conda.sh
+
 id $NB_USER
 
 # Start the notebook server

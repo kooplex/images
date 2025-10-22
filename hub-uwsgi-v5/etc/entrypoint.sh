@@ -23,5 +23,5 @@ exec 1>&2
 cd /kooplexhub/kooplexhub/
 
 /usr/local/bin/uwsgi -s /tmp/uwsgi.sock --uid 107 --gid 106 --wsgi-file kooplexhub/wsgi.py --daemonize
-service nginx start
+#service nginx start
 

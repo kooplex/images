@@ -148,13 +148,17 @@ RUN R -e "install.packages(c('protolite'), repos='http://cran.us.r-project.org')
 RUN R -e "install.packages(c('geojsonio'), repos='http://cran.us.r-project.org')"
 RUN R -e "install.packages(c('ncdf4'), repos='http://cran.us.r-project.org')"
 
+RUN rm /usr/share/keyrings/kubernetes-archive-keyring.gpg /etc/apt/sources.list.d/kubernetes.list &&\
+    apt-get update && \
+    apt-get install -yq --no-install-recommends tcsh gawk &&\
+    rm -rf /var/lib/apt/lists/*
+
 ########## add the rest
 # Install LDAP and setup authentication
 
 RUN ln -s /usr/lib/x86_64-linux-gnu/libldap.a /usr/lib/
 RUN ln -s /usr/lib/x86_64-linux-gnu/libldap.so /usr/lib/
 
-ADD etc/entrypoint-rstudio.sh /entrypoint.sh
 ADD etc/rstudio-login.html /etc/rstudio/login.html
 ADD etc/rstudio-user-settings /etc/rstudio/user-settings
 RUN chmod a-w /etc/rstudio/login.html

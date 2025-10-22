@@ -23,10 +23,12 @@ RUN apt-get update && \
    netcat-openbsd at tmux \
     python3.12 python3-pip libpython3-dev gcc &&\
     rm -rf /var/lib/apt/lists/*
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh
-ENV PATH $PATH:/root/.cargo/bin
-RUN uv venv /opt/python-packages
-RUN . /opt/python-packages/bin/activate && uv pip install uwsgi==2.0.26
+#RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+#ENV PATH $PATH:/root/.cargo/bin
+#RUN uv venv /opt/python-packages
+#RUN . /opt/python-packages/bin/activate && uv pip install uwsgi==2.0.26
+RUN pip install setuptools --break-system-packages
+RUN pip install  uwsgi==2.0.26 --break-system-packages
 
 # Custom Supervisord config
 COPY --from=0 /etc/supervisor/conf.d/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
@@ -58,15 +60,18 @@ ENV LISTEN_PORT 80
 
 # Copy the entrypoint that will generate Nginx additional configs
 
-RUN . /opt/python-packages/bin/activate && uv  pip install setuptools plotly jsonfield kaleido mysqlclient netaddr ldap3 pwgen unidecode pandas kubernetes parse
+#RUN . /opt/python-packages/bin/activate && uv  pip install setuptools plotly jsonfield kaleido mysqlclient netaddr ldap3 pwgen unidecode pandas kubernetes parse
+RUN  pip install setuptools plotly jsonfield kaleido mysqlclient netaddr ldap3 pwgen unidecode pandas kubernetes parse --break-system-packages
 
 ENV DJANGO_VERSION 4.2.14
-RUN . /opt/python-packages/bin/activate && uv  pip install django-threadlocals django=="$DJANGO_VERSION" \
+#RUN . /opt/python-packages/bin/activate && uv  pip install django-threadlocals django=="$DJANGO_VERSION" \
+RUN  pip install --break-system-packages django-threadlocals  django=="$DJANGO_VERSION" \
    django-tables2 django-bootstrap-v5 django_pandas django-bootstrap5 \
    "python-social-auth[django]" "social-auth-core[openidconnect]" social-auth-app-django social-auth-core \
    redis   channels["daphne"]  python-jose
 #   django-celery-beat django-taggit python-jose==3.3.0
-RUN . /opt/python-packages/bin/activate && uv pip install django-huey bx-django-utils django-huey-monitor channels_redis channels django-rest-framework
+#RUN . /opt/python-packages/bin/activate && uv pip install django-huey bx-django-utils django-huey-monitor channels_redis channels django-rest-framework
+RUN pip install django-huey bx-django-utils django-huey-monitor channels_redis channels django-rest-framework --break-system-packages
 
 #RUN pip3 install  debugpy==1.5.1 #git+https://github.com/arount/pytea
 #RUN ln -s /usr/local/bin/pip3.8 /usr/bin/pip3.8

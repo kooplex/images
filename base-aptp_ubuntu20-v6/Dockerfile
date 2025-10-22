@@ -15,6 +15,7 @@ RUN apt update && apt install -y --no-install-recommends tmux curl curlftpfs \
  less openjdk-8-source openjdk-8-jre gzip zlib1g-dev libpng-dev\
  make gcc ssh python3-dev libpq-dev cutadapt\
  rsync netcat-openbsd at\
+ texlive-formats-extra texlive-plain-generic \
  snakemake autoconf automake libtool zlib1g-dev &&\
  apt-get clean && rm -rf /var/lib/apt/lists/*
 

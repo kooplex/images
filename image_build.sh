@@ -6,7 +6,6 @@ BUILD_DIR=/srv/build/images
 MY_REGISTRY=image-registry.vo.elte.hu
 
 IMAGE_DIR=`basename $2`
-. ${IMAGE_DIR}/envs
 
 NS=$3
 POD_NAME=$4" -c hub"
@@ -14,6 +13,7 @@ API_CALL="python3 /kooplexhub/kooplexhub/manage.py manage_images"
 IMAGE_NAME="${IMAGE_DIR}"
 DESCRIPTION=${IMAGE_DIR}/Dockerfile
 IMAGE_TYPE=`cat ${IMAGE_DIR}/imagetype`
+IMAGE_COMMAND=`cat ${IMAGE_DIR}/command`
 RIMAGE_NAME="${MY_REGISTRY}/${IMAGE_NAME}"
 BUILDMOD_DIR=${BUILD_DIR}/${IMAGE_DIR}
 DESCRIPTION=`cat ${IMAGE_DIR}/DESCRIPTION` 
@@ -25,18 +25,17 @@ case $1 in
   "build")
       echo "Building image ${IMAGE_NAME}" >&2
       cp -r $IMAGE_DIR/* ${BUILDMOD_DIR}/
-      cd ${BUILDMOD_DIR}; . execute; cd $OLDPWD 
       
       docker $DOCKERARGS build -t ${IMAGE_NAME} -f $BUILDMOD_DIR/Dockerfile $BUILDMOD_DIR
-      docker $DOCKERARGS tag ${IMAGE_NAME} ${RIMAGE_NAME}
+      docker $DOCKERARGS tag ${IMAGE_NAME} ${RIMAGE_NAME}     
       docker $DOCKERARGS push ${RIMAGE_NAME}
   ;;
 
   "install")
       echo "Register in hub ${RIMAGE_NAME}" >&2
       echo "Install image"
-      echo kubectl exec -it -n ${NS} ${POD_NAME} -- ${API_CALL} --add_image ${RIMAGE_NAME} "${IMAGE_TYPE}"
-      kubectl exec -it -n ${NS} ${POD_NAME} -- ${API_CALL} --add_image ${RIMAGE_NAME} "${IMAGE_TYPE}"
+      echo kubectl exec -it -n ${NS} ${POD_NAME} -- ${API_CALL} --add_image ${RIMAGE_NAME} "${IMAGE_TYPE}" "${IMAGE_COMMAND}"
+      kubectl exec -it -n ${NS} ${POD_NAME} -- ${API_CALL} --add_image ${RIMAGE_NAME} "${IMAGE_TYPE}" "${IMAGE_COMMAND}"
       echo "Install image w descr and dockfile"
       kubectl exec -it -n ${NS} ${POD_NAME} -- ${API_CALL} --add_imagedescription ${RIMAGE_NAME} "${DESCRIPTION}" "${DOCKERFILE}"
       for items in `cat ${BUILDMOD_DIR}/ENVVAR`
@@ -47,7 +46,7 @@ case $1 in
 
       for items in `cat ${BUILDMOD_DIR}/PROXY`
       do
-              arr=(`echo $items| awk -v IMN=${RIMAGE_NAME} -F',' '{print $1,IMN,$2,$3,$4,$5,$6}'`)
+              arr=(`echo $items| awk -v IMN=${RIMAGE_NAME} -F',' '{print $1,IMN,$2,$3,$4}'`)
               echo ${arr[@]}
           kubectl exec -it -n ${NS} ${POD_NAME} -- ${API_CALL} --add_proxy    ${arr[@]}
              

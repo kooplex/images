@@ -20,7 +20,7 @@ c.NotebookApp.disable_check_xsrf = False
 c.NotebookApp.allow_remote_access=True
 c.NotebookApp.token = 'aiSiga1aiFai2AiZu1veeWein5gijei8yeLay2Iecae3ahkiekeisheegh2ahgee'
 c.FileContentsManager.delete_to_trash = False
-c.NotebookApp.cookie_options = {'SameSite': 'None'}
+c.NotebookApp.cookie_options = {'SameSite': 'None', 'Secure':True}
 #c.NotebookApp.disable_check_xsrf = True
 
 c.MappingKernelManager.cull_connected = True

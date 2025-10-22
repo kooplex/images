@@ -10,5 +10,5 @@ RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.d
     rm -rf /var/lib/apt/lists/*
 
 # Jupyter enhancement
-RUN  $CONDA_DIR/bin/conda install -c conda-forge 'jupyterlab>=3.0.0,<4.0.0a0' jupyterlab-lsp jupyter-lsp-python 
+RUN  $CONDA_DIR/bin/conda install -c conda-forge 'jupyterlab>=3.0.0,<4.0.0a0'  
 RUN  $CONDA_DIR/bin/pip install 'python-lsp-server[all]'

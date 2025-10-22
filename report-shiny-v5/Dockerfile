@@ -52,6 +52,8 @@ RUN R -e "install.packages(c('ggiraph'), repos='http://cran.us.r-project.org')"
 RUN R -e "BiocManager::install(c('DESeq2','microbiome','GenVisR','edgeR','qvalue','phyloseq'))"  && R -e "library(GenVisR);library(edgeR);library(qvalue);library(phyloseq)"
 RUN R -e 'BiocManager::install("ShortRead")' && R -e 'library(ShortRead)'
 RUN R -e 'devtools::install_github("hadley/devtools"); devtools::install_github("gadenbuie/shinyThings")'
+RUN R -e 'devtools::install_github("s-u/unixtools"); devtools::install_github("gadenbuie/shinyThings")'
+#RUN R -e "install.packages(c('unixtools'), repos='http://cran.us.r-project.org')"
 
 COPY etc/shiny-customized.config-template /etc/shiny-server/shiny-server.conf
 #ADD index.html /srv/shiny-server/index.html

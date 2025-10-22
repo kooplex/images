@@ -9,7 +9,7 @@ RUN $CONDA_DIR/bin/conda install --quiet --yes  -c conda-forge  altair branca ve
        scikit-image igraph \
        ipyvolume \
      xgboost sisl ipython-sql ffmpeg plotly\
-     pytess oauth2 k3d jupyterlab_sql \
+     pytess oauth2 k3d \
       graphviz \
       wrapt \
       #ipyleaflet==0.13.2 tensorflow==2.3.0  \
@@ -79,6 +79,6 @@ RUN $CONDA_DIR/bin/conda install  --quiet --yes   h5py
 #
 ## FROM TOOLS/kubernetesjobtools
 #ADD etc/41-kubejobsaliases.sh /etc/profile.d/41-kubejobsaliases.sh
-#WORKDIR /
+WORKDIR /
 
 

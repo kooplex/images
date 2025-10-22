@@ -23,7 +23,7 @@ RUN $CONDA_DIR/bin/conda update jupyterlab
 
 #RUN $CONDA_DIR/bin/conda install -c conda-forge k3d
 
-RUN $CONDA_DIR/bin/pip install pytess oauth2 k3d jupyterlab_sql \
+RUN $CONDA_DIR/bin/pip install pytess oauth2 k3d \
       graphviz \
       wrapt \
       #ipyleaflet==0.13.2 tensorflow==2.3.0  \
@@ -49,6 +49,7 @@ RUN curl https://apt.releases.teleport.dev/gpg -o /usr/share/keyrings/teleport-a
     rm -rf /var/lib/apt/lists/*
 
 RUN $CONDA_DIR/bin/pip install dash_bootstrap_components gunicorn
+RUN $CONDA_DIR/bin/pip install fastapi
 
 # 2022 04 20 requests by Borkovits
 #RUN $CONDA_DIR/bin/conda install --quiet --yes  -c conda-forge pycairo cairocffi
