@@ -1,0 +1,19 @@
+- image:
+    name: "image-registry.vo.elte.hu/jupyter-langchain_llm-v9"
+    command: "/entrypoint.sh && nice -n 19 /usr/local/bin/runjupyter.sh --config=/etc/jupyter_notebook_config.py --NotebookApp.base_url=$NB_URL --NotebookApp.port=$NB_PORT --NotebookApp.token=$NB_TOKEN"
+    os: "Ubuntu 24.04"
+    app: "Jupyter and Python"
+    hardware: "CPU support" 
+    packages: "langchain, chromadb, sketch"
+    image_type: "projectimage"
+    envs:
+      IDE_SUFFIX: "lab"
+    proxy:
+      jupyter:
+           token: True
+           default: True
+           port: 8000
+      testurl:
+           token: False
+           default: False
+           port: 9000

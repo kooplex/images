@@ -1,0 +1,9 @@
+NB_USER={container.user.username}
+NB_TOKEN={container.user.profile.token}
+NB_PORT=8000
+NB_URL={container.proxy_route}
+NB_TESTURL=notebook/test/{container.label}
+IDE_SUFFIX=auth-sign-in
+REPORT_URL=notebook/test/{container.label}
+REPORT_PORT=9000
+REPORT_USER={container.user.username}

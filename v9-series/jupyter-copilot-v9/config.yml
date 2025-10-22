@@ -1,0 +1,8 @@
+- image:
+    name: "image-registry.vo.elte.hu/jupyter-copilot-v9"
+    command: "/entrypoint.sh; sleep 2; nice -n 19 /usr/local/bin/runjupyter.sh --config=/etc/jupyter_notebook_config.py --NotebookApp.base_url=$NB_URL --NotebookApp.port=$NB_PORT --NotebookApp.token=$NB_TOKEN"
+    os: "Ubuntu 24.04"
+    app: "Jupyter and Python With Copilot AI
+    hardware: "CPU only"
+    packages: "Copilot on top of conda, uv and basic packages for handling data and plotting results"
+    image_type: "projectimage"

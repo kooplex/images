@@ -1,0 +1,13 @@
+- image:
+    name: "image-registry.vo.elte.hu/apiservice-vllm"
+    command: "/entrypoint.sh"
+    os: "Ubuntu 24.04"
+    app: "vllm server"
+    hardware: "CPU and GPU support" 
+    packages: ""
+    image_type: "apiimage"
+    proxy:
+      api:
+           token: True
+           default: True
+           port: 8000
