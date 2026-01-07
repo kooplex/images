@@ -92,7 +92,7 @@ RUN ln -s /usr/include/locale.h  /usr/include/xlocale.h && \
 WORKDIR /opt
 
 RUN $CONDA_DIR/bin/conda update -y conda
-RUN pip install "setuptools<=57.5.0" && pip install pymysql pymssql psycopg2 pyvcf multiqc pymonetdb
+RUN pip install setuptools && pip install pymysql pymssql psycopg2 "pyvcf==0.4.3" multiqc pymonetdb
 
 RUN R -e "install.packages('devtools', repos='http://cran.us.r-project.org'); library(devtools)" 
 RUN R -e 'devtools::install_github("cran/FField");library(FField)'

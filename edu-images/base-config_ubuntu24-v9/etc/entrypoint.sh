@@ -13,9 +13,7 @@ do
     fi
 done
 
-#echo "Starting notebook for $NB_USER..."
-#nice -n 19 /usr/local/bin/runjupyter.sh --config=/etc/jupyter_notebook_config.py --NotebookApp.base_url=$NB_URL --NotebookApp.port=$NB_PORT --NotebookApp.token=$NB_TOKEN ##--EnvironmentKernelSpecManager.display_name_template=\" {}\"
-
+nice -n 19 /usr/local/bin/runjupyter.sh --config=/etc/jupyter_notebook_config.py --NotebookApp.base_url=$NB_URL --NotebookApp.port=$NB_PORT --NotebookApp.token=$NB_TOKEN
 
 ##echo "Sleeping for infinity"
 #exec sleep infinity
