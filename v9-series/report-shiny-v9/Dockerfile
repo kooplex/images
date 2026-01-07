@@ -36,7 +36,8 @@ RUN R -e 'devtools::install_github("HenrikBengtsson/matrixStats")'  && R -e  'li
 
 #RUN R -e 'devtools::install_version("RPostgreSQL", version="0.7-4", repos="http://cran.us.r-project.org")' && R -e 'library(RPostgreSQL)'
 RUN R -e 'devtools::install_version("RPostgreSQL",  repos="http://cran.us.r-project.org")' && R -e 'library(RPostgreSQL)'
-RUN R -e 'devtools::install_version("XML", version="3.99-0.11", repos="http://cran.us.r-project.org")' && R -e 'library(XML)'
+#RUN R -e 'devtools::install_version("XML", version="3.99-0.11", repos="http://cran.us.r-project.org")' && R -e 'library(XML)'
+RUN R -e 'devtools::install_version("XML", repos="http://cran.us.r-project.org")' && R -e 'library(XML)'
 RUN R -e 'devtools::install_github("solymosin/RpostGIS")' && R -e ' library(RpostGIS)'
 
 RUN R -e 'devtools::install_version("RCurl", version="1.98-1.8", repos="http://cran.us.r-project.org")' && R -e 'library(RCurl)'
@@ -50,7 +51,8 @@ RUN R -e "install.packages(c('highcharter','shinybusy','shinyBS','pool','ggrepel
 RUN R -e "install.packages(c('config','DBI', 'lubridate','ISOweek','NGLVieweR', 'RColorBrewer','jsTreeR'),repos='http://cran.us.r-project.org')"
 RUN R -e "install.packages(c('ggiraph'), repos='http://cran.us.r-project.org')"
 
-RUN R -e "BiocManager::install(c('DESeq2','microbiome','GenVisR','edgeR','qvalue','phyloseq'))"  && R -e "library(GenVisR);library(edgeR);library(qvalue);library(phyloseq)"
+#RUN R -e "BiocManager::install(c('DESeq2','microbiome','GenVisR','edgeR','qvalue','phyloseq'))"  && R -e "library(GenVisR);library(edgeR);library(qvalue);library(phyloseq)"
+RUN R -e "BiocManager::install(c('DESeq2','microbiome','edgeR','qvalue','phyloseq'))"  && R -e "library(edgeR);library(qvalue);library(phyloseq)"
 RUN R -e 'BiocManager::install("ShortRead")' && R -e 'library(ShortRead)'
 RUN R -e 'devtools::install_github("hadley/devtools"); devtools::install_github("gadenbuie/shinyThings")'
 RUN R -e 'devtools::install_github("s-u/unixtools"); devtools::install_github("gadenbuie/shinyThings")'

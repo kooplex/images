@@ -1,0 +1,9 @@
+# Launch Open WebUI with KooplexAuth
+docker run -d -p 3000:3000 -p 8082:8080 -e DEFAULT_USER_ROLE=user -e OAUTH_SCOPES="openid email read profile" -e ENABLE_LOGIN_FORM=True -e OAUTH_PROVIDER_NAME=KooplexAuth -e OPENID_PROVIDER_URL=https://kooplex-auth.elte.hu/oauth/o/authorize/.well-known/openid-configuration -e OAUTH_CLIENT_SECRET=uHX87dxszsdSTkQiBHAm7xVWOedJKvijfz7vxOSWqnFDala6GC14cd2nTprA2bbLtAsYDpaCWF5YGmlHNEJx3K9dCfpi8fFZTTsQRjubz1JAKtb5aPLAhVBBMPClMJBv -e OAUTH_CLIENT_ID=xnKhbEyI1RkgH2gEFRCVewaDgW1Mk0TktC3d8ufj -e OPENID_REDIRECT_URI=http://157.181.172.113:8082/oauth/oidc/callback -e ENABLE_OAUTH_SIGNUP=True   -v /lhome/fonok/temp:/app/backend/data --name owui app-openwebui-v8
+
+# Launch Open WebUI with k8plex-test Auht
+docker run -d -p 3000:3000 -p 8082:8080 -e ENABLE_LOGIN_FORM=False -e OAUTH_PROVIDER_NAME=KooplexTestAuth -e OPENID_PROVIDER_URL=https://k8plex-test.vo.elte.hu/oauth-test/o/authorize/.well-known/openid-configuration -e OAUTH_CLIENT_SECRET=rEImBEPLA5ZhmbhqjSstn3dEarK9nZRID5tBLcocMqFsVWInriLoeWckdZE0lp6dbzN5FylyYSzIW8ZIFf9Be6MHwVlTXJiuMusJWuQUAlKh4fRG7p79anVJIgYDZIKS -e OAUTH_CLIENT_ID=1Nds43UxNvuLP4NvrdRd057rEUbTjacMghmcnblM -e ENABLE_OAUTH_SIGNUP=True   -v /lhome/fonok/temp:/app/backend/data --name owui app-openwebui-v8
+
+
+# Launch pipeline container
+docker run -d -p 9090:9099 --add-host=host.docker.internal:host-gateway -v /lhome/fonok/temp_pipelines:/app/pipelines --name owui-pipelines --restart always ghcr.io/open-webui/pipelines:main

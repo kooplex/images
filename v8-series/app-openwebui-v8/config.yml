@@ -1,0 +1,21 @@
+- image:
+    name: "image-registry.vo.elte.hu/app-openwebui-v8"
+    command: ""
+    os: "Ubuntu 24.04"
+    app: "OpenWebUI application"
+    hardware: "CPU only"
+    packages: "Basic python packages, conda ..."
+    image_type: "appimage"
+    thumbnail: "jupyter"
+    envs:
+      IDE_SUFFIX: ""
+      WEBUI_AUTH: False
+    proxy:
+      main:
+           token: False
+           default: True
+           port: 3000
+      report:
+           token: False
+           default: False
+           port: 8080

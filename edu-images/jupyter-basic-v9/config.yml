@@ -1,0 +1,22 @@
+- image:
+    name: "image-registry.vo.elte.hu/jupyter-basic-v9"
+    command: "/entrypoint.sh"
+    os: "Ubuntu 24.04"
+    app: "Jupyter and Python"
+    hardware: "CPU only"
+    packages: "conda, uv and basic packages for handling data and plotting results"
+    image_type: "projectimage"
+  proxy:
+    jupyter:
+         register: True
+         svc_port: 8000
+    testurl:
+         register: True
+         svc_port: 9000
+  service_view:
+    jupyter2:
+      proxy: jupyter2
+      suffix: lab
+      openable: True
+      pass_token: True
+      icon: button_jupyter

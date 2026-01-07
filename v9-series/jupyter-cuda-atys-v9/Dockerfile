@@ -27,12 +27,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 #    libcusparse-12-5=${NV_LIBCUSPARSE_VERSION} \
 #    ${NV_LIBCUBLAS_PACKAGE} \
 #    && rm -rf /var/lib/apt/lists/*
+RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-ubuntu2404.pin && \
+  mv cuda-ubuntu2404.pin  /etc/apt/preferences.d/cuda-repository-pin-600
+
+#RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-ubuntu2404-keyring.gpg
+RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb && \
+ sudo dpkg -i cuda-keyring_1.1-1_all.deb
+
+#RUN sed -i -e 's/archive.u/old-releases.u/' /etc/apt/sources.list.d/ubuntu.sources
+#RUN sed -i -e 's/security.u/old-releases.u/' /etc/apt/sources.list.d/ubuntu.sources
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    cuda-libraries \
+#    cuda-libraries \
     cuda-toolkit \
-    libnpp libcublas \
-    cuda-nvtx \
-    libcusparse \
+#    libnpp libcublas \
+#    cuda-nvtx \
+#    libcusparse \
     && rm -rf /var/lib/apt/lists/*
 
 # Required for nvidia-docker v1
@@ -59,11 +68,11 @@ RUN $CONDA_DIR/bin/pip install transformers
 #ADD etc/start-notebook.sh /usr/local/bin/runjupyter.sh
 #ADD etc/entrypoint.sh /entrypoint.sh
 
-RUN apt-get update && apt-get install -y --no-install-recommends openslide-tools nvidia-driver-550=550.90.07-0ubuntu1 \
-libnvidia-gl-550=550.90.07-0ubuntu1 nvidia-dkms-550=550.90.07-0ubuntu1 nvidia-kernel-common-550=550.90.07-0ubuntu1 \
-nvidia-kernel-source-550=550.90.07-0ubuntu1 libnvidia-compute-550=550.90.07-0ubuntu1 libnvidia-extra-550=550.90.07-0ubuntu1 nvidia-compute-utils-550=550.90.07-0ubuntu1 \ 
-libnvidia-decode-550=550.90.07-0ubuntu1 libnvidia-encode-550=550.90.07-0ubuntu1 nvidia-utils-550=550.90.07-0ubuntu1 xserver-xorg-video-nvidia-550=550.90.07-0ubuntu1 libnvidia-cfg1-550=550.90.07-0ubuntu1 libnvidia-fbc1-550=550.90.07-0ubuntu1 \
-    && rm -rf /var/lib/apt/lists/*
+#RUN apt-get update && apt-get install -y --no-install-recommends openslide-tools nvidia-driver-550=550.90.07-0ubuntu1 \
+#libnvidia-gl-550=550.90.07-0ubuntu1 nvidia-dkms-550=550.90.07-0ubuntu1 nvidia-kernel-common-550=550.90.07-0ubuntu1 \
+#nvidia-kernel-source-550=550.90.07-0ubuntu1 libnvidia-compute-550=550.90.07-0ubuntu1 libnvidia-extra-550=550.90.07-0ubuntu1 nvidia-compute-utils-550=550.90.07-0ubuntu1 \ 
+#libnvidia-decode-550=550.90.07-0ubuntu1 libnvidia-encode-550=550.90.07-0ubuntu1 nvidia-utils-550=550.90.07-0ubuntu1 xserver-xorg-video-nvidia-550=550.90.07-0ubuntu1 libnvidia-cfg1-550=550.90.07-0ubuntu1 libnvidia-fbc1-550=550.90.07-0ubuntu1 \
+#    && rm -rf /var/lib/apt/lists/*
 #RUN apt-get update && apt-get install -y --no-install-recommends python-openslide \
 #    && rm -rf /var/lib/apt/lists/*
 #RUN . /opt/python-packages/bin/activate && uv pip install openslide-python

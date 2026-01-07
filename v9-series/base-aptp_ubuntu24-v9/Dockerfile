@@ -11,10 +11,10 @@ RUN apt update && apt install -y --no-install-recommends tmux curl \
  git gcc mpi-default-dev mpi-default-bin libfftw3-dev cmake \
   links2 \
  autoconf libncurses5-dev libncursesw5-dev zlib1g-dev libbz2-dev liblzma-dev apt-rdepends \
- libfontconfig1 libxrender1 libxrender-dev \
+ libfontconfig1 libxrender1 libxrender-dev  libxtst6 libxi6 libasound2-dev  libpci-dev \
  g++ libicu-dev libxml2-dev \
  libscalapack-mpi-dev \
- texlive-xetex texlive-lang-european texlive-science libmysqlclient-dev\
+ texlive-xetex texlive-lang-european texlive-science texlive-plain-generic libmysqlclient-dev\
  python3-dev libpq-dev python3-gdbm \
  liblapack-dev liblapack-doc  liblapack-test liblapacke liblapacke-dev libtmglib-dev libtmglib3 libblas3 libblas-dev libblasr-dev libblas-test \
  less gzip zlib1g-dev libpng-dev\

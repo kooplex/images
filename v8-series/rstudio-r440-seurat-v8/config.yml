@@ -1,0 +1,20 @@
+- image:
+    name: "image-registry.vo.elte.hu/rstudio-r440-seurat-v8"
+    command: "/entrypoint.sh"
+    os: "Ubuntu 24.04"
+    app: "RStudio with R and Python"
+    hardware: "CPU only"
+    packages: "Basic R packages + seurat"
+    image_type: "project"
+    thumbnail: "rstudio"
+    envs:
+      IDE_SUFFIX: "auth-sign-in"
+    proxy:
+      rstudio:
+           token: False
+           default: True
+           port: 8000
+      testurl:
+           token: False
+           default: False
+           port: 9000

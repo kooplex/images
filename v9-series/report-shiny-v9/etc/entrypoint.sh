@@ -1,5 +1,16 @@
 #!/bin/sh
 
+cd $REPORT_FOLDER
+
+# Install packages
+if [ -f  'requirements.txt' ]; then
+        for package in `cat requirements.txt`
+        do
+                R -e install.packages\(\'$package\'\)
+        done
+fi
+
+
 sed -i -e "s,##BASEURL##,$REPORT_URL," /etc/shiny-server/shiny-server.conf
 
 /init

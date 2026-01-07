@@ -1,0 +1,17 @@
+- image:
+    name: "image-registry.vo.elte.hu/jupyter-aimltools-v9"
+    description: "Image for AI/ML tools using GPU"
+    os: "Ubuntu 24.04"
+    app: "Jupyter and Python, Torch"
+    hardware: "CPU/GPU"
+    packages: "flask"
+    image_type: "projectimage"
+      #    proxy:
+      #      jupyter:
+      #           token: True
+      #           default: True
+      #           port: 8000
+      #      testurl:
+      #           token: False
+      #           default: False
+      #           port: 9000

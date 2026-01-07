@@ -1,6 +1,0 @@
-Supports: Jupyter and Python
-Hardware: CPU and GPU
-Software: Nvidia toolkit, Tensorflow
-
-# https://www.tensorflow.org/install
-This image is based on the tensorflow/tensorflow:latest-jupyter image
