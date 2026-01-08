@@ -1,1 +1,4 @@
+Details to be found in [xwiki](https://xwiki.vo.elte.hu/en/Applications/certificates-mgt)
+
+---
 certbot certonly --dns-rfc2136 --dns-rfc2136-credentials rfc2136.ini -d DOMAIN.vo.elte.hu --agree-tos -m kooplex@elte.hu 
