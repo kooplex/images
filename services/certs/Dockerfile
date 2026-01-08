@@ -19,6 +19,12 @@ RUN chmod +x /usr/local/bin/incluster-kubeconfig.sh
 COPY update-cert.sh /usr/local/bin/update-cert.sh
 RUN chmod +x /usr/local/bin/update-cert.sh
 
+COPY update-cert-harica.sh /usr/local/bin/update-cert-harica.sh
+RUN chmod +x /usr/local/bin/update-cert-harica.sh
+
+COPY register-harica.sh /usr/local/bin/register-harica.sh
+RUN chmod +x /usr/local/bin/register-harica.sh
+
 COPY test-certs.sh /usr/local/bin/test-certs.sh
 RUN chmod +x /usr/local/bin/test-certs.sh
 
