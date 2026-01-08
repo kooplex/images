@@ -43,7 +43,7 @@ def _post(url, data, file_path, api_token, api_user):
         return response.json()
     raise Exception(f"Unexpected behaviour {response}")
 
-def send_image_to_api(server, api_token, image_name):
+def send_image_to_api(server, api_token, image_path):
     
     #userinfo = pwd.getpwuid(os.getuid())
     api_user = "wfct0p" #userinfo.pw_name
@@ -58,31 +58,30 @@ def send_image_to_api(server, api_token, image_name):
         image_file_name = os.path.basename(file_path)
         url_api+=f"upload_logo/{image_file_name}/"
     else:
-        url_api+="install_image/"
+        #url_api+="install_image?image_path={image_path}"
+        url_api+=f"install_image/{image_path}/"
     print(f"HELLO {url_api}")
-    file_path = f"{image_name}/config.yml"
+    file_path = f"{image_path}/config.yml"
     resp = _post(url_api, data="", file_path=file_path, api_token=api_token, api_user=api_user)
     print(resp)
 
 
 def parse_args():
     p = argparse.ArgumentParser(description="Install Docker Image to Kooplex Platform using Hub API")
-    p.add_argument("-i", "--image_name", help='Which image )')
+    p.add_argument("-i", "--image_path", help='Which image )')
     p.add_argument("-s", "--host_platform",  help="Which platform: e.g. k8plex.example.com )")
-    # p.add_argument("-u", "--without-human", dest="hitl", action="store_true", help="Human in the loop (optional), default False")
-    # p.add_argument("-d", "--message-db-path", dest="message_store_db_path", default="state.db", help="Path to sqlite state DB")
-    # p.add_argument("--db-explorer-path", dest="db_explorer", default=DATABASE_EXPLORER_PATH, help="Path to write visualizations")
+    p.add_argument("-c", "--config_path", default="config.env", help="Path to the token and host url config file")
     return p.parse_args()
 
 if __name__ == "__main__":
     args = parse_args()
-    image = args.image_name.split("/")[0]
+    image_path = args.image_path.split("/")[0]
     host = args.host_platform
-    load_dotenv('/lhome/fonok/.secrets/hub_token')
+    config_path = args.config_path 
+    load_dotenv(config_path)
     host_url = ge(f"{host}_host","")
     host_token = ge(f"{host}_token","")
-    print(host_url, image)
-    send_image_to_api(host_url, host_token, image)
+    send_image_to_api(host_url, host_token, image_path)
 
 
 

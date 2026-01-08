@@ -1,19 +1,24 @@
 - image:
-    name: "image-registry.vo.elte.hu/denario-app"
+    registry: "image-registry.vo.elte.hu"
     command: "/entrypoint.sh"
     os: "Ubuntu 24.04"
-    app: "Denario deep research application"
+    app: "Jupyter and Python, Denario scientific research app with AI"
     hardware: "CPU only"
-    packages: "denario, cambagents"
-    image_type: "appimage"
-    envs:
-      IDE_SUFFIX: "tree"
-    proxy:
-      jupyter:
-           token: True
-           default: True
-           port: 8501
-      testurl:
-           token: False
-           default: False
-           port: 9000
+    packages: "conda, uv and basic packages for handling data and plotting results"
+    image_type: "projectimage"
+  proxy:
+    jupyter:
+         register: True
+         svc_port: 8000
+    denario:
+         register: True
+         basepath: "notebook/report/{container.label}"
+         svc_hostname: "{container.label}"
+         svc_port: 9000
+  service_view:
+    denario-app:
+      proxy: "denario"
+      suffix: "lab"
+      openable: True
+      pass_token: False
+      icon: jupyter

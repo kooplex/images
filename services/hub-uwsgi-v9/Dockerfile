@@ -71,7 +71,7 @@ RUN  pip install --break-system-packages django-threadlocals  django=="$DJANGO_V
    redis   channels["daphne"]  python-jose
 #   django-celery-beat django-taggit python-jose==3.3.0
 #RUN . /opt/python-packages/bin/activate && uv pip install django-huey bx-django-utils django-huey-monitor channels_redis channels django-rest-framework
-RUN pip install django-huey bx-django-utils django-huey-monitor channels_redis channels django-rest-framework django-model-utils --break-system-packages
+RUN pip install tqdm django-huey bx-django-utils django-huey-monitor channels_redis channels django-rest-framework django-model-utils --break-system-packages
 
 #RUN pip3 install  debugpy==1.5.1 #git+https://github.com/arount/pytea
 #RUN ln -s /usr/local/bin/pip3.8 /usr/bin/pip3.8
