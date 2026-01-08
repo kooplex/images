@@ -13,20 +13,7 @@ RUN apt update && \
 COPY --from=kubectl_stage /opt/bitnami/kubectl/bin/kubectl /usr/local/bin/kubectl
 RUN chmod +x /usr/local/bin/kubectl
 
-COPY incluster-kubeconfig.sh /usr/local/bin/incluster-kubeconfig.sh
-RUN chmod +x /usr/local/bin/incluster-kubeconfig.sh
-
-COPY update-cert.sh /usr/local/bin/update-cert.sh
-RUN chmod +x /usr/local/bin/update-cert.sh
-
-COPY update-cert-harica.sh /usr/local/bin/update-cert-harica.sh
-RUN chmod +x /usr/local/bin/update-cert-harica.sh
-
-COPY register-harica.sh /usr/local/bin/register-harica.sh
-RUN chmod +x /usr/local/bin/register-harica.sh
-
-COPY test-certs.sh /usr/local/bin/test-certs.sh
-RUN chmod +x /usr/local/bin/test-certs.sh
+COPY --chmod=0755 incluster-kubeconfig.sh update-cert.sh update-cert-harica.sh register-harica.sh test-certs.sh /usr/local/bin/
 
 ENTRYPOINT ["/usr/local/bin/incluster-kubeconfig.sh"]
 CMD ["bash","-lc","sleep infinity"]
