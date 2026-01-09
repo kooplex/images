@@ -1,4 +1,4 @@
-FROM base-jupyter_fiznum-v8
+FROM base-jupyter_ubuntu24-v9
 
 #RUN sed -i -e 's/archive.u/old-releases.u/' /etc/apt/sources.list.d/ubuntu.sources
 #RUN sed -i -e 's/security.u/old-releases.u/' /etc/apt/sources.list.d/ubuntu.sources
