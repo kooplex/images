@@ -13,7 +13,8 @@ do
     fi
 done
 
-nice -n 19 /usr/local/bin/runjupyter.sh --config=/etc/jupyter_notebook_config.py --NotebookApp.base_url=$NB_URL --NotebookApp.port=$NB_PORT --NotebookApp.token=$NB_TOKEN
+nice -n 19 /usr/local/bin/runjupyter.sh --config=/etc/jupyter_notebook_config.py --ServerApp.base_url=$NB_URL --ServerApp.port=$NB_PORT --IdentityProvider.token=$NB_TOKEN
+
 
 ##echo "Sleeping for infinity"
 #exec sleep infinity

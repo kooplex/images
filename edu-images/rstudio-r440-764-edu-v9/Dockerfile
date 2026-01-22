@@ -1,5 +1,5 @@
 FROM base-teleportv14.3.21_ubuntu24
-FROM base-conda_ubuntu22-v7
+FROM base-conda_ubuntu24-v9
 
 USER root
 # configure apt frontent
@@ -70,7 +70,7 @@ RUN wget --quiet https://github.com/krallin/tini/releases/download/v0.19.0/tini 
 
 # To get the latest R
 RUN wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc && \
-    add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/" &&\
+    add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu noble-cran40/" &&\
     apt-get update  &&\
     apt-get install -yq --no-install-recommends r-base r-base-dev &&\
     rm -rf /var/lib/apt/lists/*

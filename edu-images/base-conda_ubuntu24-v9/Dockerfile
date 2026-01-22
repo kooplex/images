@@ -18,7 +18,7 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 ENV PATH $PATH:$CARGO_HOME/bin
 
 RUN  pip install \
-	poetry poetry-kernel ipython-sql jupyterlab_latex jupyter_copilot \
+	 ipython-sql jupyterlab_latex jupyter_copilot \
 	"ipywidgets>=8.0" nbclassic
 
 ## For databases
