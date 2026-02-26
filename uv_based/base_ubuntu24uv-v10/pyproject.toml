@@ -1,0 +1,25 @@
+[project]
+name = "base-image"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "jupyterlab",
+    "notebook",
+    "matplotlib",
+    "numpy",
+    "pandas",
+    "scipy",
+    "tqdm",
+    "ipywidgets",
+    "sqlalchemy",
+    "ipython-sql",
+    "jupyterlab_latex",
+    "jupyter_copilot",
+    "nbclassic",
+    "mysqlclient",
+    "pymssql",
+    "psycopg2",
+    "pymonetdb",
+    "sqlalchemy",
+]
+
