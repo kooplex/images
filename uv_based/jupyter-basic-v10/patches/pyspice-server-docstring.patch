@@ -1,0 +1,5 @@
+--- a/PySpice/Spice/NgSpice/Server.py
++++ b/PySpice/Spice/NgSpice/Server.py
+@@ -21,1 +21,1 @@
+-"""This module provides an interface to run ngspice in server mode and get back the simulation
++r"""This module provides an interface to run ngspice in server mode and get back the simulation

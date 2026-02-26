@@ -1,0 +1,9 @@
+--- a/PySpice/Math/__init__.py
++++ b/PySpice/Math/__init__.py
+@@ -41,1 +41,1 @@
+-    """Return :math:`x \sqrt{2}`"""
++    r"""Return :math:`x \sqrt{2}`"""
+@@ -45,1 +45,1 @@
+-    """Return :math:`x / \sqrt{2}`"""
++    r"""Return :math:`x / \sqrt{2}`"""
+

@@ -1,0 +1,11 @@
+--- a/PySpice/Spice/NgSpice/Shared.py
++++ b/PySpice/Spice/NgSpice/Shared.py
+@@ -625,1 +625,1 @@
+-                self._error_in_stderr = True
++                # self._error_in_stderr = True
+--- a/PySpice/Spice/NgSpice/Shared.py
++++ b/PySpice/Spice/NgSpice/Shared.py
+@@ -593,1 +593,1 @@
+-            self._logger.warning("Unsupported Ngspice version {}".format(self._ngspice_version))
++            # self._logger.warning("Unsupported Ngspice version {}".format(self._ngspice_version))
+
