@@ -1,0 +1,12 @@
+FROM image-registry.vo.elte.hu/base_ubuntu26uv_linux_amd64
+
+RUN uv tool install jupyterlab
+RUN uv tool install jupyter-core
+
+RUN uv pip install \
+         ipython-sql jupyterlab_latex jupyter_copilot \
+        "ipywidgets>=8.0" nbclassic
+
+## For databases
+RUN uv pip install  mysqlclient pymssql psycopg2 pymonetdb sqlalchemy
+
