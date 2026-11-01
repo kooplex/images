@@ -20,23 +20,23 @@ RUN apt update && apt install -y --no-install-recommends  \
  snakemake automake libtool zlib1g-dev &&\
  apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN  pip install \
+RUN  uv pip install \
 	 ipython-sql jupyterlab_latex jupyter_copilot \
 	"ipywidgets>=8.0" nbclassic  mysqlclient pymssql psycopg2 pymonetdb sqlalchemy \
 	gunicorn jupyter-book pandoc \
 	PySpice schemdraw
 
-RUN sed -i '625{s/^[[:space:]]*self\._error_in_stderr = True/# &/}' \
-        /opt/conda/lib/python3.12/site-packages/PySpice/Spice/NgSpice/Shared.py
+#RUN sed -i '625{s/^[[:space:]]*self\._error_in_stderr = True/# &/}' \
+#        /opt/conda/lib/python3.13/site-packages/PySpice/Spice/NgSpice/Shared.py
 
 ## git lfs
-RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo os=ubuntu dist=jammy bash &&\
+RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | os=ubuntu dist=jammy bash &&\
     apt-get install -yq --no-install-recommends \
     git-lfs && \
     rm -rf /var/lib/apt/lists/*
 
-RUN wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.3.296/quarto-1.3.296-linux-amd64.deb &&\
-    dpkg -i  quarto-1.3.296-linux-amd64.deb && rm quarto-1.3.296-linux-amd64.deb
+RUN wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.10.20/quarto-1.10.20-linux-amd64.deb &&\
+    dpkg -i quarto-1.10.20-linux-amd64.deb && rm quarto-1.10.20-linux-amd64.deb
 
 
 

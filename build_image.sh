@@ -15,10 +15,11 @@ fi
 PLATFORM=$3
 PLATFORM_TYPE=$(echo $PLATFORM | sed 's/\//_/g')
 
+NEW_IMAGE_NAME=${IMAGE_NAME}:${PLATFORM_TYPE} 
 docker buildx build \
   --builder=kube \
   --platform=${PLATFORM} \
-  -t image-registry.vo.elte.hu/${IMAGE_NAME}_${PLATFORM_TYPE} \
+  -t image-registry.vo.elte.hu/${NEW_IMAGE_NAME} \
   -f ${DOCKERFILE} \
   . \
   --push
